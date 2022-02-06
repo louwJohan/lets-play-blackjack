@@ -35,7 +35,7 @@ def check_totals(cards, num):
     """
     player_total = 0
     for i in range(len(cards)):
-        if cards[i][0].isdigit():
+        if cards[i][0].isnumeric():
             player_total += int(cards[i][0])
         elif cards[i][0] == "A":
             if player_total > 10:
@@ -47,6 +47,38 @@ def check_totals(cards, num):
 
     return  player_total          
 
+
+def start_game_validation(player_input):
+    """
+    Check if player input is a certain string to start game
+    or display the rules
+    """
+    try:
+        if player_input.lower() != "play" or "rules":
+            raise ValueError(
+                f"Please enter play to start game or rules for the rules"
+            )
+    except ValueError as e:
+        print(f"Invalid data: {e}, please try again.\n")
+        return False
+
+    return True
+
+def play_game_validation(player_input):
+    """
+    Compares player input to string to ask for another card to stay or 
+    to exit the game
+    """
+    try:
+        if player_input.lower() != "hit" or "stay" or "exit":
+            raise ValueError(
+                f"Please enter play to start game or rules for the rules"
+            )
+    except ValueError as e:
+        print(f"Invalid data: {e}, please try again.\n")
+        return False
+
+    return True
 
 def print_rules():
     """
@@ -131,9 +163,12 @@ def player_game(players_cards):
         if player_input == "hit":
             new_card = deal_cards(cards,1)
             player_one.append(new_card)
-            player_total = check_totals(player_one, len(player_one))
-            print(player_one)
-            print(player_total)
+            new_card_total = check_totals(new_card,1)
+            player_total += new_card_total
+            if player_total > 21:
+                print(f"Your total is {player_total} you Bust!")
+                break
+
         elif player_input == "stay":
             break
 
