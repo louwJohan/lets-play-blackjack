@@ -35,15 +35,16 @@ def check_totals(cards, num):
     """
     player_total = 0
     for i in range(num):
-        if cards[i][0].isnumeric():
-            player_total += int(cards[i][0])
-        elif cards[i][0] == "J":
+        card_num = cards[i][0]
+        if card_num.isnumeric():
+            player_total += int(card_num)
+        elif card_num == "J":
             player_total += 10
-        elif cards[i][0] == "Q":
+        elif card_num == "Q":
             player_total += 10
-        elif cards[i][0] == "K":
+        elif card_num == "K":
             player_total += 10        
-        elif cards[i][0] == "A":
+        elif card_num == "A":
             if player_total > 10:
                 player_total += 1
             elif player_total < 10:
@@ -150,66 +151,92 @@ of 21 but with more cards.As described above, if the dealer has a
 blackjack, players with blackjack make a push, while all other players lose.''')
 
 
-def player_game(players_cards):
+def player_game(players_cards,player_total):
 
     """
     This Function controlls the game for the player it will update the 
     variables for the players cards ,score and card totals.
     """
-    player_total = check_totals(players_cards, len(players_cards))
     print(f"Your cards are {players_cards}")
     print(f"Your total is {player_total}")
     print(f"Dealers first card is {computer_cards[0]}")
     print(f"Dealers total is {check_totals(computer_cards,1)}")
+    final_player_total = player_total
 
     while True:
         player_input = input("Do you want to hit or stay?\nType hit for another card or stay to continue\n")
         if player_input == "hit":
             new_card = deal_cards(cards,1)
-            player_one.append(new_card)
+            print(f"Your new card is {new_card}")
             new_card_total = check_totals(new_card,1)
-            player_total += new_card_total
-            print(f"Your cards are {players_cards}")
-            print(f"Your total is {player_total}")
-            if player_total > 21:
-                print(f"Your total is {player_total} you Bust!")
+            if new_card_total == 11:
+                if final_player_total > 10:
+                    final_player_total += 1
+                elif final_player_total < 10:
+                    final_player_total += 11
+            elif new_card_total != 11:
+                final_player_total += new_card_total
+            print(f"Your new total is {final_player_total}")            
+        
+        if  final_player_total > 21:
                 break
+            
+            
+            
 
         elif player_input == "stay":
             break
+    return final_player_total
 
-def computer_play(computer_cards):
-    computer_total = check_totals(computer_cards, 2)
+def computer_play(computer_cards, computer_total):
+    """
+    Function take two parameters the dealers cards and the total.
+    It checks if the total is below 17 if true then deals a new card
+    and updates the total
+    """
     print(f"Dealers cards are {computer_cards}")
     print(f"Dealers total is {computer_total}")
     
     while computer_total < 17:
-        computer_cards.append(deal_cards(cards,1))
-        new_total = check_totals(computer_cards, len(computer_cards))
-        computer_total = new_total
+            comp_new_card = deal_cards(cards,1)
+            print(f"Dealers new card is {comp_new_card}")
+            comp_new_card_total = check_totals(comp_new_card,1)
+            if comp_new_card_total == 11:
+                if computer_total < 10:
+                    computer_total += 11
+                elif computer_total > 10:
+                    computer_total += 1
+            elif comp_new_card_total != 11:
+                computer_total += comp_new_card_total
+            print(f"Dealers new total is {computer_total}")
+    return computer_total
+
+
+def check_winner(player_total,dealer_total):
+
+    if player_total > 21:
+        print(f"Your total is {player_total}. You Bust! ")
+    elif dealer_total > 21 and player_total <= 21 :
+        print(f"Dealer's total is {dealer_total}. Dealer Bust!")
+        print("You win!!")
+    elif player_total > dealer_total and dealer_total <=21 and player_total <=21:
+        print("You win!")
+    elif player_total < dealer_total and dealer_total <=21 and player_total <=21:
+        print("Dealer wins!")
+    elif player_total == computer_total:
+        print("It's a draw!!")
     
-        if computer_total >= 17 and computer_total <= 21:
-            print(f"Dealers cards are {computer_cards}")
-            print(f"Dealers total is {computer_total}")
-            break
-        
-        elif computer_total > 21 :
-            print(f"Dealers cards are {computer_cards}")
-            print(f"Dealers total is {computer_total}")
-            break
 
         
 
 cards = deck()
-print(len(cards))
-#player_one = deal_cards(cards, 2)
-#print(player_one)
-#player_total = check_totals(player_one, len(player_one))
-#print(player_total)
+player_one = deal_cards(cards, 2)
+player_one_total = check_totals(player_one, len(player_one))
+print(player_one_total)
 computer_cards = deal_cards(cards,2)
 computer_total = check_totals(computer_cards, len(computer_cards))
-print(computer_cards)
-print(computer_total)
-#player_game(player_one)
-computer_play(computer_cards)
-print(len(cards))
+final_player_one_total = player_game(player_one,player_one_total)
+print(final_player_one_total)
+final_computer_total = computer_play(computer_cards, computer_total)
+check_winner(final_player_one_total,final_computer_total)
+
