@@ -47,7 +47,7 @@ def check_totals(cards, num):
         elif card_num == "A":
             if player_total > 10:
                 player_total += 1
-            elif player_total < 10:
+            elif player_total <= 10:
                 player_total += 11
 
     return  player_total          
@@ -151,17 +151,17 @@ of 21 but with more cards.As described above, if the dealer has a
 blackjack, players with blackjack make a push, while all other players lose.''')
 
 
-def player_game(players_cards,player_total):
+def player_game(players_cards,cards_total):
 
     """
     This Function controlls the game for the player it will update the 
     variables for the players cards ,score and card totals.
     """
     print(f"Your cards are {players_cards}")
-    print(f"Your total is {player_total}")
+    print(f"Your total is {cards_total}")
     print(f"Dealers first card is {computer_cards[0]}")
     print(f"Dealers total is {check_totals(computer_cards,1)}")
-    final_player_total = player_total
+    final_player_total = cards_total
 
     while True:
         player_input = input("Do you want to hit or stay?\nType hit for another card or stay to continue\n")
@@ -172,7 +172,7 @@ def player_game(players_cards,player_total):
             if new_card_total == 11:
                 if final_player_total > 10:
                     final_player_total += 1
-                elif final_player_total < 10:
+                elif final_player_total <= 10:
                     final_player_total += 11
             elif new_card_total != 11:
                 final_player_total += new_card_total
@@ -180,10 +180,6 @@ def player_game(players_cards,player_total):
         
         if  final_player_total > 21:
                 break
-            
-            
-            
-
         elif player_input == "stay":
             break
     return final_player_total
@@ -202,7 +198,7 @@ def computer_play(computer_cards, computer_total):
             print(f"Dealers new card is {comp_new_card}")
             comp_new_card_total = check_totals(comp_new_card,1)
             if comp_new_card_total == 11:
-                if computer_total < 10:
+                if computer_total <= 10:
                     computer_total += 11
                 elif computer_total > 10:
                     computer_total += 1
@@ -236,7 +232,5 @@ print(player_one_total)
 computer_cards = deal_cards(cards,2)
 computer_total = check_totals(computer_cards, len(computer_cards))
 final_player_one_total = player_game(player_one,player_one_total)
-print(final_player_one_total)
 final_computer_total = computer_play(computer_cards, computer_total)
 check_winner(final_player_one_total,final_computer_total)
-
