@@ -59,7 +59,11 @@ def start_game_validation(player_input):
     or display the rules
     """
     try:
-        if player_input.lower() != "play" or "rules":
+        if player_input.lower() != "play":
+            raise ValueError(
+                f"Please enter play to start game or rules for the rules"
+            )
+        elif player_input.lower() != "rules":
             raise ValueError(
                 f"Please enter play to start game or rules for the rules"
             )
@@ -75,7 +79,15 @@ def play_game_validation(player_input):
     to exit the game
     """
     try:
-        if player_input != "hit" or "stay" or "exit":
+        if player_input != "hit":
+            raise ValueError(
+                f"Please enter hit for another card or stay to continue"
+            )
+        elif player_input != "stay":
+            raise ValueError(
+                f"Please enter hit for another card or stay to continue"
+            )
+        elif player_input != "exit":
             raise ValueError(
                 f"Please enter hit for another card or stay to continue"
             )
@@ -151,7 +163,7 @@ of 21 but with more cards.As described above, if the dealer has a
 blackjack, players with blackjack make a push, while all other players lose.''')
 
 
-def player_game(players_cards,cards_total):
+def player_game(players_cards,cards_total,computer_cards,cards):
 
     """
     This Function controlls the game for the player it will update the 
@@ -222,15 +234,42 @@ def check_winner(player_total,dealer_total):
     elif player_total == computer_total:
         print("It's a draw!!")
     
+def play_game():
+    cards = deck()
+    player_one = deal_cards(cards, 2)
+    computer_cards = deal_cards(cards,2)
+    player_one_total = check_totals(player_one, len(player_one))
+    computer_total = check_totals(computer_cards, len(computer_cards))
+    final_player_one_total = player_game(player_one,player_one_total,computer_cards,cards)
+    final_computer_total = computer_play(computer_cards, computer_total)
+    check_winner(final_player_one_total,final_computer_total)
 
+
+def main():
+    print('''
+          _____
+         |A .  | _____
+         | /.\ ||A ^  | _____
+         |(_._)|| / \ ||A _  | _____
+         |  |  || \ / || ( ) ||A_ _ |
+         |____V||  .  ||(_'_)||( v )|
+                |____V||  |  || \ / |
+                       |____V||  .  |
+                              |____V|
         
+             Are you feeling lucky?
 
-cards = deck()
-player_one = deal_cards(cards, 2)
-player_one_total = check_totals(player_one, len(player_one))
-print(player_one_total)
-computer_cards = deal_cards(cards,2)
-computer_total = check_totals(computer_cards, len(computer_cards))
-final_player_one_total = player_game(player_one,player_one_total)
-final_computer_total = computer_play(computer_cards, computer_total)
-check_winner(final_player_one_total,final_computer_total)
+            Let' Play Blackjack!!!!!
+    ''')     
+    print("To start game type 'play'.")
+    print("For the rules type 'rules'.") 
+    print("Type 'exit' to close game.")
+    player_input = input()  
+
+    if player_input == "play":
+        play_game()
+    elif player_input == "rules":
+        print_rules()
+
+
+main()
