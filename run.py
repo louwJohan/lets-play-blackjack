@@ -61,35 +61,36 @@ def start_game_validation(player_input):
     Check if player input is a certain string to start game
     or display the rules
     """
-    try:
-        if player_input == "start" or player_input == "rules" or player_input == "exit":
-            print("Valid input!\n")
-        else:  
-            raise ValueError(
-                f"Please enter start to start game or rules for the rules"
-            )
-    except ValueError as e:
-        print(f"Invalid input: {e}, please try again.\n")
-        return False
-
-    return True
+    if player_input == "start" or player_input == "rules" or player_input == "exit":
+        return True
+    else:
+        print("Invalid input, please try again.\n")
+        return False  
+        
 
 def play_game_validation(player_input):
     """
     Compares player input to string to ask for another card to stay or 
     to exit the game
     """
-    try:
-        if player_input == "hit" or player_input == "stay" or player_input == "exit":
-            print("Valid input\n")
-        else:
-            raise ValueError(
-                f"Please enter hit for another card or stay to continue"
-            )
-    except ValueError as e:
-        print(f"Invalid data: {e}, please try again.\n")
+    if player_input == "hit" or player_input == "stay" or player_input == "exit":
+        return True
+    else:
+        print("Invalid data, please try again.\n")
         return False
-    return True
+        
+
+def continue_game_validation(player_input):
+    """
+    Compares player input to string to asks if the player wants to continue the 
+    game. Returns True.
+    """
+    if player_input == "y" or player_input == "n":
+        return True
+    else:
+        print("Invalid data, please try again.\n")
+        return False
+
 
 def print_rules():
     """
@@ -179,7 +180,10 @@ def player_game(players_cards,cards_total,computer_cards,cards):
 
     while True:
         while True:
-            player_input = input("Do you want to hit or stay?\nType hit for another card or stay to continue\n")
+            print("Type hit for another card or stay to continue.")
+            print("To exit type 'exit'.")
+            player_input = input("Do you want to hit or stay?\n").lower().strip()
+
             if play_game_validation(player_input):
                 break
         if player_input == "hit":
@@ -250,8 +254,23 @@ def play_game():
         player_one_total = check_totals(player_one, len(player_one))
         computer_total = check_totals(computer_cards, len(computer_cards))
         final_player_one_total = player_game(player_one,player_one_total,computer_cards,cards)
-        final_computer_total = computer_play(computer_cards, computer_total, cards)
-        check_winner(final_player_one_total,final_computer_total)
+        print(final_player_one_total)
+        if final_player_one_total > 21:
+            print(f"Your total is {final_player_one_total}. You Bust !!!!!\n")
+        elif final_player_one_total <= 21:
+            final_computer_total = computer_play(computer_cards, computer_total, cards)
+            check_winner(final_player_one_total,final_computer_total)
+
+        
+        while True:
+            play_again = input("Do you want to play again y/n.\n").lower().strip()
+            cont_playing = continue_game_validation(play_again)
+            
+            if cont_playing:
+                break
+        
+        if play_again == "n":
+            break
 
 def main():
 
@@ -278,7 +297,7 @@ def main():
         print("To start game type 'start'.\n")
         print("For the rules type 'rules'.\n") 
         print("Type 'exit' to close game.\n")
-        player_input = input() 
+        player_input = input().lower().strip()
         validation = start_game_validation(player_input)
         if player_input == "rules":
             print_rules()
