@@ -59,16 +59,14 @@ def start_game_validation(player_input):
     or display the rules
     """
     try:
-        if player_input.lower() != "play":
+        if player_input == "start" or player_input == "rules" or player_input == "exit":
+            print("Valid input!")
+        else:  
             raise ValueError(
-                f"Please enter play to start game or rules for the rules"
-            )
-        elif player_input.lower() != "rules":
-            raise ValueError(
-                f"Please enter play to start game or rules for the rules"
+                f"Please enter start to start game or rules for the rules"
             )
     except ValueError as e:
-        print(f"Invalid data: {e}, please try again.\n")
+        print(f"Invalid input: {e}, please try again.\n")
         return False
 
     return True
@@ -79,22 +77,15 @@ def play_game_validation(player_input):
     to exit the game
     """
     try:
-        if player_input != "hit":
-            raise ValueError(
-                f"Please enter hit for another card or stay to continue"
-            )
-        elif player_input != "stay":
-            raise ValueError(
-                f"Please enter hit for another card or stay to continue"
-            )
-        elif player_input != "exit":
+        if player_input == "hit" or player_input == "stay" or player_input == "exit":
+            print("Valid input")
+        else:
             raise ValueError(
                 f"Please enter hit for another card or stay to continue"
             )
     except ValueError as e:
         print(f"Invalid data: {e}, please try again.\n")
         return False
-
     return True
 
 def print_rules():
@@ -176,7 +167,10 @@ def player_game(players_cards,cards_total,computer_cards,cards):
     final_player_total = cards_total
 
     while True:
-        player_input = input("Do you want to hit or stay?\nType hit for another card or stay to continue\n")
+        while True:
+            player_input = input("Do you want to hit or stay?\nType hit for another card or stay to continue\n")
+            if play_game_validation(player_input):
+                break
         if player_input == "hit":
             new_card = deal_cards(cards,1)
             print(f"Your new card is {new_card}")
@@ -196,7 +190,7 @@ def player_game(players_cards,cards_total,computer_cards,cards):
             break
     return final_player_total
 
-def computer_play(computer_cards, computer_total):
+def computer_play(computer_cards, computer_total, cards):
     """
     Function take two parameters the dealers cards and the total.
     It checks if the total is below 17 if true then deals a new card
@@ -241,35 +235,43 @@ def play_game():
     player_one_total = check_totals(player_one, len(player_one))
     computer_total = check_totals(computer_cards, len(computer_cards))
     final_player_one_total = player_game(player_one,player_one_total,computer_cards,cards)
-    final_computer_total = computer_play(computer_cards, computer_total)
+    final_computer_total = computer_play(computer_cards, computer_total, cards)
     check_winner(final_player_one_total,final_computer_total)
 
 
 def main():
-    print('''
-          _____
-         |A .  | _____
-         | /.\ ||A ^  | _____
-         |(_._)|| / \ ||A _  | _____
-         |  |  || \ / || ( ) ||A_ _ |
-         |____V||  .  ||(_'_)||( v )|
-                |____V||  |  || \ / |
-                       |____V||  .  |
-                              |____V|
+
+    while True:
+        print('''
+             _____
+            |A .  | _____
+            | /.\ ||A ^  | _____
+            |(_._)|| / \ ||A _  | _____
+            |  |  || \ / || ( ) ||A_ _ |
+            |____V||  .  ||(_'_)||( v )|
+                   |____V||  |  || \ / |
+                          |____V||  .  |
+                                 |____V|
         
-             Are you feeling lucky?
+                 Are you feeling lucky?
 
-            Let' Play Blackjack!!!!!
-    ''')     
-    print("To start game type 'play'.")
-    print("For the rules type 'rules'.") 
-    print("Type 'exit' to close game.")
-    player_input = input()  
+                Let' Play Blackjack!!!!!
+        ''')     
+        print("To start game type 'start'.")
+        print("For the rules type 'rules'.") 
+        print("Type 'exit' to close game.")
+        player_input = input() 
+        validation = start_game_validation(player_input)
+        if validation:
+            break
+            
 
-    if player_input == "play":
+    if player_input == "start":
         play_game()
     elif player_input == "rules":
         print_rules()
+    elif player_input == "exit":
+        pass
 
 
 main()
