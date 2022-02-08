@@ -60,7 +60,7 @@ def start_game_validation(player_input):
     """
     try:
         if player_input == "start" or player_input == "rules" or player_input == "exit":
-            print("Valid input!")
+            print("Valid input!\n")
         else:  
             raise ValueError(
                 f"Please enter start to start game or rules for the rules"
@@ -78,7 +78,7 @@ def play_game_validation(player_input):
     """
     try:
         if player_input == "hit" or player_input == "stay" or player_input == "exit":
-            print("Valid input")
+            print("Valid input\n")
         else:
             raise ValueError(
                 f"Please enter hit for another card or stay to continue"
@@ -93,7 +93,10 @@ def print_rules():
     The Function prints out the rules of the game
     """
     print('''Beginners Guide to Blackjack 
+    ---------------------------------------------
+
 Introduction
+------------
 Blackjack is a popular American casino game, now found throughout the
 world. It is a banking game in which the aim of the player is to achieve
 a hand whose points total nearer to 21 than the banker's hand, but
@@ -103,6 +106,7 @@ The following outline explains the basic rules of standard blackjack (21),
 along with the house rules most commonly featured in casinos.
 
 Game objective
+---------------
 Although many players may play in a single round of blackjack, it's fundamentally a 
 two-player game. In blackjack, players don't play against each other; and they don't co-operate.
 The only competition is the dealer.The aim of the game is to accumulate a higher point 
@@ -111,6 +115,7 @@ your individual cards. The cards 2 through 10 have their face value, J, Q, and K
 worth 10 points each, and the Ace is worth either 1 or 11 points (player's choice).
     
 The deal and "blackjack"
+-----------------------
 At the start of a blackjack game, the players and the dealer receive two cards each. 
 The players' cards are normally dealt face up, while the dealer has one face down 
 (called the hole card) and one face up.The best possible blackjack hand is an opening 
@@ -120,6 +125,7 @@ If a player and the dealer each have a blackjack, the result is a push for that 
 If the dealer has a blackjack, all players not holding a blackjack lose.
 
 The players' turns
+------------------
 After the cards have been dealt, the game goes on with each player taking action - in 
 clockwise order starting to dealer's left.Then the player can keep his hand as it is 
 (stand) or take more cards from the deck (hit), one at a time, until either the player
@@ -130,6 +136,7 @@ but some casinos have restrictions regarding this.
 
  
 The dealer's turn
+-----------------
 When all players have finished their actions, either decided to stand or busted, 
 the dealer turns over his hidden hole card. If the dealer has a natural 21 (blackjack) 
 with his two cards, he won't take any more cards.All players lose, except players
@@ -143,6 +150,7 @@ There might even be blackjack tables with different rules within the same casino
 
  
 Showdown
+--------
 If the dealer goes bust, all players who are left in the game win. 
 Otherwise players with higher point totals than the dealer win, while 
 players with lower totals than the dealer lose. For those with the same 
@@ -161,9 +169,9 @@ def player_game(players_cards,cards_total,computer_cards,cards):
     variables for the players cards ,score and card totals.
     """
     print(f"Your cards are {players_cards}")
-    print(f"Your total is {cards_total}")
+    print(f"Your total is {cards_total}\n")
     print(f"Dealers first card is {computer_cards[0]}")
-    print(f"Dealers total is {check_totals(computer_cards,1)}")
+    print(f"Dealers total is {check_totals(computer_cards,1)}\n")
     final_player_total = cards_total
 
     while True:
@@ -182,11 +190,14 @@ def player_game(players_cards,cards_total,computer_cards,cards):
                     final_player_total += 11
             elif new_card_total != 11:
                 final_player_total += new_card_total
-            print(f"Your new total is {final_player_total}")            
+            print(f"Your new total is {final_player_total}\n")            
         
         if  final_player_total > 21:
                 break
         elif player_input == "stay":
+            break
+        elif player_input == "exit":
+            print("Thank you for playing!!!")
             break
     return final_player_total
 
@@ -201,7 +212,7 @@ def computer_play(computer_cards, computer_total, cards):
     
     while computer_total < 17:
             comp_new_card = deal_cards(cards,1)
-            print(f"Dealers new card is {comp_new_card}")
+            print(f"Dealers new card is {comp_new_card}\n")
             comp_new_card_total = check_totals(comp_new_card,1)
             if comp_new_card_total == 11:
                 if computer_total <= 10:
@@ -210,25 +221,25 @@ def computer_play(computer_cards, computer_total, cards):
                     computer_total += 1
             elif comp_new_card_total != 11:
                 computer_total += comp_new_card_total
-            print(f"Dealers new total is {computer_total}")
+            print(f"Dealers new total is {computer_total}\n")
     return computer_total
 
 
 def check_winner(player_total,dealer_total):
 
     if player_total > 21:
-        print(f"Your total is {player_total}. You Bust! ")
+        print(f"Your total is {player_total}. You Bust!\n")
     elif dealer_total > 21 and player_total <= 21 :
-        print(f"Dealer's total is {dealer_total}. Dealer Bust!")
-        print("You win!!")
+        print(f"Dealer's total is {dealer_total}. Dealer Bust!\n")
+        print("You win!!\n")
     elif player_total > dealer_total and dealer_total <=21 and player_total <=21:
-        print("You win!")
+        print("You win!\n")
     elif player_total < dealer_total and dealer_total <=21 and player_total <=21:
-        print("Dealer wins!")
+        print("Dealer wins!\n")
     elif player_total == computer_total:
-        print("It's a draw!!")
+        print("It's a draw!!\n")
     
-def play_game():
+def play_game(): 
     cards = deck()
     player_one = deal_cards(cards, 2)
     computer_cards = deal_cards(cards,2)
@@ -238,40 +249,42 @@ def play_game():
     final_computer_total = computer_play(computer_cards, computer_total, cards)
     check_winner(final_player_one_total,final_computer_total)
 
-
 def main():
 
     while True:
         print('''
-             _____
-            |A .  | _____
-            | /.\ ||A ^  | _____
-            |(_._)|| / \ ||A _  | _____
-            |  |  || \ / || ( ) ||A_ _ |
-            |____V||  .  ||(_'_)||( v )|
-                   |____V||  |  || \ / |
-                          |____V||  .  |
-                                 |____V|
+        ----------------------------------------------------------
+        ----------------------------------------------------------
+                  _____
+                 |A .  | _____
+                 | /.\ ||A ^  | _____
+                 |(_._)|| / \ ||A _  | _____
+                 |  |  || \ / || ( ) ||A_ _ |
+                 |____V||  .  ||(_'_)||( v )|
+                        |____V||  |  || \ / |
+                               |____V||  .  |
+                                      |____V|
         
-                 Are you feeling lucky?
+                        Are you feeling lucky?
 
-                Let' Play Blackjack!!!!!
+                        Let' Play Blackjack!!!!
+        ----------------------------------------------------------
+        ----------------------------------------------------------       
         ''')     
-        print("To start game type 'start'.")
-        print("For the rules type 'rules'.") 
-        print("Type 'exit' to close game.")
+        print("To start game type 'start'.\n")
+        print("For the rules type 'rules'.\n") 
+        print("Type 'exit' to close game.\n")
         player_input = input() 
         validation = start_game_validation(player_input)
-        if validation:
+        if player_input == "rules":
+            print_rules()
+        elif validation:
             break
             
 
     if player_input == "start":
         play_game()
-    elif player_input == "rules":
-        print_rules()
-    elif player_input == "exit":
-        pass
+        
 
 
 main()
