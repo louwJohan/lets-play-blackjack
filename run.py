@@ -1,4 +1,7 @@
 import random
+import os
+import sys
+import subprocess
 
 def deck():
     """
@@ -198,7 +201,7 @@ def player_game(players_cards,cards_total,computer_cards,cards):
             break
         elif player_input == "exit":
             print("Thank you for playing!!!")
-            break
+            os.execl(sys.executable, sys.executable, *sys.argv)
     return final_player_total
 
 def computer_play(computer_cards, computer_total, cards):
@@ -236,18 +239,19 @@ def check_winner(player_total,dealer_total):
         print("You win!\n")
     elif player_total < dealer_total and dealer_total <=21 and player_total <=21:
         print("Dealer wins!\n")
-    elif player_total == computer_total:
+    elif player_total == dealer_total:
         print("It's a draw!!\n")
     
 def play_game(): 
-    cards = deck()
-    player_one = deal_cards(cards, 2)
-    computer_cards = deal_cards(cards,2)
-    player_one_total = check_totals(player_one, len(player_one))
-    computer_total = check_totals(computer_cards, len(computer_cards))
-    final_player_one_total = player_game(player_one,player_one_total,computer_cards,cards)
-    final_computer_total = computer_play(computer_cards, computer_total, cards)
-    check_winner(final_player_one_total,final_computer_total)
+    while True:
+        cards = deck()
+        player_one = deal_cards(cards, 2)
+        computer_cards = deal_cards(cards,2)
+        player_one_total = check_totals(player_one, len(player_one))
+        computer_total = check_totals(computer_cards, len(computer_cards))
+        final_player_one_total = player_game(player_one,player_one_total,computer_cards,cards)
+        final_computer_total = computer_play(computer_cards, computer_total, cards)
+        check_winner(final_player_one_total,final_computer_total)
 
 def main():
 
@@ -283,6 +287,7 @@ def main():
             
 
     if player_input == "start":
+        print("Lets Play!!!!!!\n")
         play_game()
         
 
