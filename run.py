@@ -326,7 +326,7 @@ def main():
                                |____V||  |  || \ / |
                                       |____V||  .  |
                                              |____V|
-        
+                                                    
                             Are you feeling lucky?
 
                             Let' Play Blackjack!!!!
