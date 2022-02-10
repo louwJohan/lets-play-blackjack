@@ -31,6 +31,15 @@ def deal_cards(cards,number):
 
     return player_cards
 
+def print_cards(cards, num):
+  for i in range(num):
+    print(f'''
+           ¬¬¬¬¬¬¬¬
+           {cards[i][0]}
+        
+                  {cards[i][1]}
+           ¬¬¬¬¬¬¬¬''')
+
 def check_totals(cards, num):
     """
     Checks totals of cards. Takes the list of cards 
@@ -172,9 +181,11 @@ def player_game(players_cards,cards_total,computer_cards,cards):
     This Function controlls the game for the player it will update the 
     variables for the players cards ,score and card totals.
     """
-    print(f"Your cards are {players_cards}")
+    print("Your cards are")
+    print_cards(players_cards,2)
     print(f"Your total is {cards_total}\n")
-    print(f"Dealers first card is {computer_cards[0]}")
+    print(f"Dealers first card is")
+    print_cards(computer_cards,1)
     print(f"Dealers total is {check_totals(computer_cards,1)}\n")
     final_player_total = cards_total
 
@@ -188,7 +199,8 @@ def player_game(players_cards,cards_total,computer_cards,cards):
                 break
         if player_input == "hit":
             new_card = deal_cards(cards,1)
-            print(f"Your new card is {new_card}")
+            print("Your new card is")
+            print_cards(new_card, 1)
             new_card_total = check_totals(new_card,1)
             if new_card_total == 11:
                 if final_player_total > 10:
@@ -214,12 +226,14 @@ def computer_play(computer_cards, computer_total, cards):
     It checks if the total is below 17 if true then deals a new card
     and updates the total
     """
-    print(f"Dealers cards are {computer_cards}")
+    print("Dealers cards are")
+    print_cards(computer_cards, 2)
     print(f"Dealers total is {computer_total}")
     
     while computer_total < 17:
             comp_new_card = deal_cards(cards,1)
-            print(f"Dealers new card is {comp_new_card}\n")
+            print("Dealers new card is")
+            print_cards(comp_new_card, 1)
             comp_new_card_total = check_totals(comp_new_card,1)
             if comp_new_card_total == 11:
                 if computer_total <= 10:
@@ -294,9 +308,9 @@ def main():
         ----------------------------------------------------------
         ----------------------------------------------------------       
         ''')     
-        print("To start game type 'start'.\n")
-        print("For the rules type 'rules'.\n") 
-        print("Type 'exit' to close game.\n")
+        print("To start game type 'start'.")
+        print("For the rules type 'rules'.") 
+        print("Type 'exit' to close game.")
         player_input = input().lower().strip()
         validation = start_game_validation(player_input)
         if player_input == "rules":
