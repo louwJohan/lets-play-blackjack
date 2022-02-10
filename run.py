@@ -106,7 +106,7 @@ def print_rules():
     when called
     """
     print('''Beginners Guide to Blackjack 
-    ---------------------------------------------
+---------------------------------------------
 
 Introduction
 ------------
