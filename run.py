@@ -34,11 +34,10 @@ def deal_cards(cards,number):
 def print_cards(cards, num):
   for i in range(num):
     print(f'''
-           ¬¬¬¬¬¬¬¬
+           ¬¬¬¬¬¬
            {cards[i][0]}
-        
-                  {cards[i][1]}
-           ¬¬¬¬¬¬¬¬''')
+                {cards[i][1]}
+           ¬¬¬¬¬¬''')
 
 def check_totals(cards, num):
     """
