@@ -5,8 +5,8 @@
 [Code](https://github.com/louwJohan/lets-play-blackjack)
 
 ## Introduction
-Display your Blackjack skill in Let's Play Blackjack and see if you can beat the 
-dealer. Let's Play Poker is a command line application to play blackjack against
+Display your Blackjack skills in Let's Play Blackjack and see if you can beat the 
+dealer. Let's Play Blackjack is a command line application to play blackjack against
 the computer for fun. Users can inter act with the programme deciding to 
 choose another card or to continue. It cant also display the rules if you are new
 to the game.
@@ -85,8 +85,16 @@ is determined.
 
 ## Testing 
 
-The programme was tested by playing the game and assessing the outcomes, on the deployed project and while 
-coding the Project.
+The programme was tested by playing the game and assessing the outcomes, on the deployed project and while coding the Project.
+- Check is main graphic displays
+- Check is user commands display and programme allows for input
+- Try different inputs to see if error message comes up
+- When game starts see if cards display and totals are added correctly
+- In game play check if error message come up when wrong input is typed in
+- Make sure when 'hit' another cards is displayed and totals are added again.
+- When stay dealers cards are dealt and totals are added up.
+- Make sure game exits when exit is typed
+- Check winner is correctly calculated by comparing scores
 
 The code was run through the PEP8 online linter (PEP8 LINTER)[http://pep8online.com/]. There
 are a few lines of code longer than 79 characters and one white space I could not remove
@@ -104,6 +112,18 @@ Python 3 was used for this programme and a template from The Code Institute to d
 programme in a web browser 
 
 ## Deployment
+
+### How to clone the GitHub repository
+Steps to create a local clone
+- Go to the https://github.com/louwJohan/lets-play-blackjack repository on GitHub
+- Click the "Code" button to the right of the screen, click HTTPs and copy the link there
+- Open a GitBash terminal and navigate to the directory where you want to locate the clone
+- On the command line, type "git clone" then paste in the copied url and press the Enter key to begin the clone process
+- Changes made to the local clone can be pushed back to the repository using the following commands 
+- git add filenames (or "." to add all changed files)
+- git commit -m "text message describing changes"
+- git push
+
 The project was deployed on Heroku using the following steps
 - Log onto your Heroku account
 - Click on 'new' in the right hand corner and chose 'Create new app'
